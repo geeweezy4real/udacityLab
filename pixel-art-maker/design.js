@@ -17,47 +17,40 @@ create width element
 add it to the grid
 */
 
-// When size is submitted by the user, call makeGrid()
-let submitBtn = document.getElementById('submitButton');
-submitBtn.addEventListener('click', function(e) {
-    e.preventDefault();
-    makeGrid();
-});
 
-//Make Grid Function
+let run = document.getElementById("submitButton");
+run.addEventListener("click", function(e) {
+  e.preventDefault();
+  makeGrid();
+});
+// Select color input
+// Select size input
+// When size is submitted by the user, call makeGrid(
 function makeGrid() {
-  // select the size input, both width and height
-  //get the Height and width
-  let gridHeight = document.getElementById('inputHeight').value;
-  let gridWidth = document.getElementById('inputWidth').value;
-
-  //get canvas
-let canvas = document.getElementById('pixelCanvas');
-//Remove existing grid before drawing a new one
-let tableData = document.querySelectorAll('.data');
- //reset grid on submit
- if (tableData.lenght !== 0) {
-     while (canvas.hasChildNodes()) {
-         canvas.removeChild(canvas.lastChild);
-     }
-
- }
-  //Create the rows outer for loop
-for(let row = 0; row < gridHeight; row++){
-  const rows = document.createElement('tr');
-  //Create the columns inner for loop
-  for(let column = 0; column < gridWidth; column++){
-    const cell = document.createElement('td');
-    cell.appendChild();
-      row.appendChild(cell)
+  let gridHeight = document.getElementById("inputHeight").value;
+  let gridWidth = document.getElementById("inputWidth").value;
+  let canvas = document.getElementById("pixelCanvas");
+  let cells = document.querySelectorAll(".cell"); //dunno why .cell is added
+  // CLEAR GRID before adding/creating a new one
+  if (cells !== 0) {
+    while (canvas.hasChildNodes()) {
+      canvas.removeChild(canvas.lastChild);
+    }
   }
+
+  // SIZE THE GRID
+  for (let h = 0; h < gridHeight; h++) {
+    row = document.createElement("tr");
+    for (let w = 0; w < gridWidth; w++) {
+      let col = document.createElement("td");
+      col.classList.add("cell");
+      row.appendChild(col);
+      canvas.appendChild(row);
+      col.addEventListener('click', function() {
+        let colorPicker = document.getElementById('colorPicker').value;
+        col.style.backgroundColor = colorPicker;
+      });
+    }
+  }
+
 }
-}
-
-//Add event listener to cells to set background-color to the selected color when clicked
-document.querySelector('pixelCanvas').click('tr td', function(e) {
-  let cellColor = document.getElementById('colorPicker');
-
-  document.querySelector(e.target).css('background-color', cellColor)
-
-});
